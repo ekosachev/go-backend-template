@@ -1,3 +1,4 @@
+// router godoc
 package router
 
 import (
@@ -11,6 +12,8 @@ import (
 	"github.com/ekosachev/go-backend-template/internal/repository"
 	"github.com/ekosachev/go-backend-template/internal/service"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"gorm.io/gorm"
 )
 
@@ -39,7 +42,7 @@ func New(cfg *config.Config, l *slog.Logger, db *gorm.DB) *gin.Engine {
 	// Health endpoint
 	health := handlers.NewHealthHandler(db)
 	r.GET("/health", health.Health)
-
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	// Wire up repositories and services
 	usersRepo := repository.NewGormRepository[models.User](db)
 	authSvc := service.NewAuthService(usersRepo, cfg.JWTSecret)

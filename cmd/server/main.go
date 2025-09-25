@@ -8,6 +8,7 @@ import (
 	"syscall"
 	"time"
 
+	_ "github.com/ekosachev/go-backend-template/docs"
 	"github.com/ekosachev/go-backend-template/internal/config"
 	"github.com/ekosachev/go-backend-template/internal/db"
 	"github.com/ekosachev/go-backend-template/internal/logger"
