@@ -28,6 +28,11 @@ func New(cfg *config.Config, l *slog.Logger, db *gorm.DB) *gin.Engine {
 	r.Use(func(c *gin.Context) {
 		start := time.Now()
 		c.Next()
+
+		if c.FullPath() == "/health" {
+			return
+		}
+
 		l.Info("request",
 			slog.String("method", c.Request.Method),
 			slog.String("path", c.FullPath()),
